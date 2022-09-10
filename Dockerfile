@@ -1,26 +1,29 @@
-FROM  ubuntu:latest
-MAINTAINER aishwaryaital12@gmail.com
-RUN yum install -y httpd \
- zip\
- unzip
-ADD https://www.free-css.com/assets/files/free-css-templates/download/page254/photogenic.zip /var/www/html/
-WORKDIR /var/www/html/
-RUN unzip photogenic.zip
-RUN cp -rvf photogenic/* .
-RUN rm -rf photogenic photogenic.zip
-CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
+FROM amazonlinux:latest
+
+# Install dependencies
+RUN yum update -y && \
+    yum install -y httpd && \
+    yum search wget && \
+    yum install wget -y && \
+    yum install unzip -y
+
+# change directory
+RUN cd /var/www/html
+
+# download webfiles
+RUN wget https://github.com/azeezsalu/techmax/archive/refs/heads/main.zip
+
+# unzip folder
+RUN unzip main.zip
+
+# copy files into html directory
+RUN cp -r techmax-main/* /var/www/html/
+
+# remove unwanted folder
+RUN rm -rf techmax-main main.zip
+
+# exposes port 80 on the container
 EXPOSE 80
- 
- 
-# FROM  centos:latest
-# MAINTAINER aishwaryaital12@gmail.com
-# RUN yum install -y httpd \
-#  zip\
-#  unzip
-# ADD https://www.free-css.com/assets/files/free-css-templates/download/page265/shine.zip /var/www/html/
-# WORKDIR /var/www/html/
-# RUN unzip shine.zip
-# RUN cp -rvf shine/* .
-# RUN rm -rf shine shine.zip
-# CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
-# EXPOSE 80   
+
+# set the default application that will start when the container start
+ENTRYPOINT ["/usr/sbin/httpd", "-D", "FOREGROUND"]
