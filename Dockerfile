@@ -1,6 +1,6 @@
-FROM  centos:latest
+FROM  ubuntu:latest
 MAINTAINER aishwaryaital12@gmail.com
-RUN yum install -y httpd \
+RUN sudo apt-get update \
  zip\
  unzip
 ADD https://www.free-css.com/assets/files/free-css-templates/download/page254/photogenic.zip /var/www/html/
