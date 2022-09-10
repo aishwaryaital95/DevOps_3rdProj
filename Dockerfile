@@ -13,7 +13,7 @@ EXPOSE 80
  
  
 # FROM  centos:latest
-# MAINTAINER vikashashoke@gmail.com
+# MAINTAINER aishwaryaital12@gmail.com
 # RUN yum install -y httpd \
 #  zip\
 #  unzip
